@@ -5,7 +5,10 @@ import json
 from pokemons import pokemonlist
 
 __author__ = 'encode'
+
 _delay = 1 #seconds
+
+_pokeVision = False
 
 _apikey = "" #Your Google Places APIKey
 
@@ -78,7 +81,45 @@ def _printer(name,lat,lng,exp):
     print "-------------------------------------------------"
 
 #Finder
-def _finder(city):
+def _finderGo(city):
+    print "[INFO] Looking pokemons in: " + city
+    _googleacurl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+\
+               city+"&types=(cities)&key="+_apikey
+    _googleacjsondata = _jsondata(_googleacurl)
+
+    _cityreference = _googleacjsondata['predictions'][0]['reference']
+
+    _googledurl = "https://maps.googleapis.com/maps/api/place/details/json?reference="+\
+              _cityreference+"&sensor=true&key="+_apikey
+    _googledjsondata = _jsondata(_googledurl)
+
+    _latitude = _googledjsondata['result']['geometry']['location']['lat']
+    _longitude = _googledjsondata['result']['geometry']['location']['lng']
+
+    _latitudene = _googledjsondata['result']['geometry']['viewport']['northeast']['lat']
+    _longitudene = _googledjsondata['result']['geometry']['viewport']['northeast']['lng']
+
+    _latitudesw = _googledjsondata['result']['geometry']['viewport']['southwest']['lat']
+    _longitudesw = _googledjsondata['result']['geometry']['viewport']['southwest']['lng']
+
+    _statusWait = True
+
+    _scanurl = "https://api-live-us1.pokemongo.id/maps?vt=-"+str(_latitudesw)+","+str(_longitudesw)+\
+               ","+str(_latitudene)+","+str(_longitudene)+"&u="+str(time())
+    _scanurljsondata = _jsondatach(_scanurl)
+
+    for pokename in _pokemons:
+        for pokemon in _scanurljsondata['pokemons']:
+            _id = pokemon['pokemon_id']
+            _name = _pokename(_id)
+            if pokename.lower() in _name.lower():
+                _lat = pokemon['latitude']
+                _lng = pokemon['longitude']
+                _exp = pokemon['expires']
+                _printer(_name, _lat, _lng, _exp)
+
+#Finder
+def _finderPokeVision(city):
     print "[INFO] Looking pokemons in: " + city
     _googleacurl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+\
                city+"&types=(cities)&key="+_apikey
@@ -139,7 +180,10 @@ def _finder(city):
 #Loop
 def _loop():
     for city in _cities:
-        _finder(city)
+        if _pokeVision:
+            _finderPokeVision(city)
+        else:
+            _finderGo(city)
 
 #Init
 _inputpoke = raw_input("Pokemon: ")
