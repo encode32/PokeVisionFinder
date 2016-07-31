@@ -1,0 +1,8 @@
+New York, Central Park:40.764871:-73.9734972
+Myrtle Beach:33.714451:-78.877194
+San Francisco:37.779669:-122.411384
+Santa Monica:34.012257:-118.494415
+Tokyo, Shinjuku Chuo Park:35.689456:139.690797
+Tokyo, Disneyland:35.633511:139.879925
+Hong Kong:22.285661:114.150202
+Sydney Hyde Park:22.285661:114.150202
