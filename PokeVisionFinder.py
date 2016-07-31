@@ -1,4 +1,5 @@
 import os
+from sys import argv
 import urllib2
 from time import sleep,time
 import json
@@ -186,6 +187,10 @@ def _loop():
             _finderGo(city)
 
 #Init
-_inputpoke = raw_input("Pokemon: ")
+_inputpoke = ""
+if len(argv) > 1:
+    _inputpoke = argv[1]
+else:
+    _inputpoke = raw_input("Pokemon: ")
 _pokesplit(_inputpoke)
 _loop()
