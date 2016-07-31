@@ -93,8 +93,6 @@ def _finderSkipLagged(city):
                ","+str(_latitudene)+","+str(_longitudene)
     _scanurljsondata = _jsondatach(_scanurl)
 
-    print _scanurl
-
     for pokename in _pokemons:
         for pokemon in _scanurljsondata['pokemons']:
             _id = pokemon['pokemon_id']
