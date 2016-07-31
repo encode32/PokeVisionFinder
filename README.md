@@ -11,3 +11,7 @@ PokeVisionFinder.py snorlax,dratini,dragonair,dragonite,muk 0 2 1
 3rd argument: zoomFactor, increase search range, 1 is like 13.85Km diagonal
 
 4th argument 0/1 Not Logging pokemons/Logging pokemons (pokemons.log file)
+
+# Thanks
+
+To juninho271999 for adding coords - http://www.ownedcore.com/forums/members/1092159-juninho271999.html
