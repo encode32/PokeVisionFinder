@@ -22,6 +22,13 @@ _cities = []
 
 _pokemons = []
 
+_pokemonslisted = []
+
+#PokeSniper2 Configuration
+ps_use = False
+ps_path = "D:\PokemonGO\Sniper\PokeSniper2.exe"
+ps_dir = "D:\PokemonGO\Sniper"
+
 #Clear
 def _clear():
     #windows
@@ -95,6 +102,12 @@ def _printer(name,lat,lng,exp):
     print "-------------------------------------------------"
     _logPokemon(name, str(lat), str(lng), _expire)
 
+#Logger
+def _logPokemon(name, lat, lng, expire):
+    with open("pokemons.log", "a+") as f:
+        f.write("[" + name + "] [" + lat + "," + lng + "] [" + expire + "]\n")
+        f.close()
+
 #CoordsLoader
 def _populateCities():
     with open("coords.txt", "a+") as f:
@@ -102,12 +115,6 @@ def _populateCities():
         for line in _data:
             _citydata = line.split(":")
             _cities.append([_citydata[0],_citydata[1],_citydata[2]])
-        f.close()
-
-#Logger
-def _logPokemon(name, lat, lng, expire):
-    with open("pokemons.log", "a+") as f:
-        f.write("[" + name + "] [" + lat + "," + lng + "] [" + expire + "]\n")
         f.close()
 
 #Finder
@@ -123,14 +130,25 @@ def _finderSkipLagged(city):
     _scanurljsondata = _jsondatach(_scanurl)
 
     for pokename in _pokemons:
-        for pokemon in _scanurljsondata['pokemons']:
-            _id = pokemon['pokemon_id']
-            _name = _pokename(_id)
-            if pokename.lower() in _name.lower():
-                _lat = pokemon['latitude']
-                _lng = pokemon['longitude']
-                _exp = pokemon['expires']
-                _printer(_name, _lat, _lng, _exp)
+        try:
+            for pokemon in _scanurljsondata['pokemons']:
+                _id = pokemon['pokemon_id']
+                _name = _pokename(_id)
+                if pokename.lower() in _name.lower():
+                    _lat = pokemon['latitude']
+                    _lng = pokemon['longitude']
+                    _exp = pokemon['expires']
+                    _combo = _name+str(_lat)+str(_lng)
+                    if _combo not in _pokemonslisted:
+                        _pokemonslisted.append(_combo)
+                        _printer(_name, _lat, _lng, _exp)
+                        if ps_use: _pokeSniper(_name, str(_lat), str(_lng))
+                    else:
+                        print "[INFO] Pokemon already listed found."
+        except KeyError, e:
+            print '[ERROR] KeyError = ' + str(e)
+        except IndexError, e:
+            print '[ERROR] IndexError = ' + str(e)
 
 #Finder
 def _finderGo(city):
@@ -145,15 +163,24 @@ def _finderGo(city):
     _scanurljsondata = _jsondatach(_scanurl)
 
     for pokename in _pokemons:
-        for pokemon in _scanurljsondata['pokemons']:
-            _id = pokemon['pokemon_id']
-            _name = _pokename(_id)
-            if pokename.lower() in _name.lower():
-                _lat = pokemon['latitude']
-                _lng = pokemon['longitude']
-                _exp = pokemon['expires']
-                _printer(_name, _lat, _lng, _exp)
+        try:
+            for pokemon in _scanurljsondata['pokemons']:
+                _id = pokemon['pokemon_id']
+                _name = _pokename(_id)
+                if pokename.lower() in _name.lower():
+                    _lat = pokemon['latitude']
+                    _lng = pokemon['longitude']
+                    _exp = pokemon['expires']
+                    _printer(_name, _lat, _lng, _exp)
+        except KeyError, e:
+            print '[ERROR] KeyError = ' + str(e)
+        except IndexError, e:
+            print '[ERROR] IndexError = ' + str(e)
 
+#Sniper
+def _pokeSniper(name, lat, lng):
+    os.chdir(ps_dir)
+    os.system(ps_path+" "+name+" "+lat+" "+lng)
 
 #Loop
 def _loop():
