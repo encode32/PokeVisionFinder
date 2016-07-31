@@ -4,6 +4,7 @@ import urllib2
 from time import sleep,time
 import json
 from pokemons import pokemonlist
+import httplib
 
 __author__ = 'encode'
 
@@ -34,15 +35,43 @@ def _sleep():
 
 #JsonData
 def _jsondata(url):
-    _rawdata = urllib2.urlopen(url)
-    return json.load(_rawdata)
+    try:
+        _rawdata = urllib2.urlopen(url)
+        return json.load(_rawdata)
+    except urllib2.HTTPError, e:
+        print '[ERROR] HTTPError = ' + str(e.code)
+        return _jsondata(url)
+    except urllib2.URLError, e:
+        print '[ERROR] URLError = ' + str(e.reason)
+        return _jsondata(url)
+    except httplib.HTTPException, e:
+        print '[ERROR] HTTPException'
+        return _jsondata(url)
+    except Exception:
+        import traceback
+        print '[ERROR] generic exception: ' + traceback.format_exc()
+        return _jsondata(url)
 
 #JsonData Custom Headers
 def _jsondatach(url):
-    _headers = { 'User-Agent' : 'Mozilla/5.0' }
-    _req = urllib2.Request(url, None,_headers)
-    _rawdata = urllib2.urlopen(_req)
-    return json.load(_rawdata)
+    try:
+        _headers = { 'User-Agent' : 'Mozilla/5.0' }
+        _req = urllib2.Request(url, None,_headers)
+        _rawdata = urllib2.urlopen(_req)
+        return json.load(_rawdata)
+    except urllib2.HTTPError, e:
+        print '[ERROR] HTTPError = ' + str(e.code)
+        return _jsondatach(url)
+    except urllib2.URLError, e:
+        print '[ERROR] URLError = ' + str(e.reason)
+        return _jsondatach(url)
+    except httplib.HTTPException, e:
+        print '[ERROR] HTTPException'
+        return _jsondatach(url)
+    except Exception:
+        import traceback
+        print '[ERROR] generic exception: ' + traceback.format_exc()
+        return _jsondatach(url)
 
 #Pokemon Name
 def _pokename(id):
