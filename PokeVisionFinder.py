@@ -185,6 +185,7 @@ def _pokeSniper(name, lat, lng):
 #Loop
 def _loop():
     for city in _cities:
+        _sleep()
         if "Skip" in _useMode:
             _finderSkipLagged(city)
         elif "Go" in _useMode:
