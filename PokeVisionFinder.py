@@ -11,6 +11,8 @@ _delay = 1 #seconds
 
 _pokeVision = False
 
+_nonstop = True
+
 _apikey = "" #Your Google Places APIKey
 
 _cities = ["London",
@@ -193,4 +195,8 @@ if len(argv) > 1:
 else:
     _inputpoke = raw_input("Pokemon: ")
 _pokesplit(_inputpoke)
-_loop()
+if _nonstop:
+    while 1:
+        _loop()
+else:
+    _loop()
