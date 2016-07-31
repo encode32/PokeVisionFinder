@@ -12,6 +12,13 @@ PokeVisionFinder.py snorlax,dratini,dragonair,dragonite,muk 0 2 1
 
 4th argument 0/1 Not Logging pokemons/Logging pokemons (pokemons.log file)
 
+# PokeSniper2 Setting
+ps_use = False // Set this to True
+
+ps_path = "D:\PokemonGO\Sniper\PokeSniper2.exe" // Your path for the PokeSniper2 exe
+
+ps_dir = "D:\PokemonGO\Sniper" // Your folder path for the PokeSniper2
+
 # Thanks
 
 To juninho271999 for adding coords - http://www.ownedcore.com/forums/members/1092159-juninho271999.html
