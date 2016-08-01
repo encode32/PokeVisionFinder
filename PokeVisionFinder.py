@@ -197,13 +197,14 @@ _inputpoke = ""
 
 _populateCities()
 if len(argv) == 2:
-    # If argv[1] is less than 10 (catch.txt) use file
-    if len(argv[1]) < 10:
+    if argv[1] is "catch.txt":
         _inputpoke = [line.strip() for line in open(argv[1], 'r')]
     # Else the user want to type in manually.
-    else: _inputpoke = argv[1]
+    else:
+        _inputpoke = argv[1]
+        _pokesplit(_inputpoke)
 elif len(argv) == 5:
-    if len(argv[1]) < 10:
+    if argv[1] is "catch.txt":
         _inputpoke = [line.strip() for line in open(argv[1], 'r')]
     else:
         _inputpoke = argv[1]
