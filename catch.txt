@@ -12,3 +12,5 @@ alakzam
 growlithe
 arcanine
 charizard
+mewto
+mew
