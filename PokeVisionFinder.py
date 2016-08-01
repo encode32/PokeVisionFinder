@@ -205,13 +205,15 @@ if len(argv) == 2:
 elif len(argv) == 5:
     if len(argv[1]) < 10:
         _inputpoke = [line.strip() for line in open(argv[1], 'r')]
-    else: _inputpoke = argv[1]
+    else:
+        _inputpoke = argv[1]
+        _pokesplit(_inputpoke)
     _nonstop = int(argv[2]) == 1
     _zoomFactor = float(argv[3])
     _logging = int(argv[4]) == 1
 else:
     _inputpoke = raw_input("Pokemon: ")
-_pokesplit(_inputpoke)
+    _pokesplit(_inputpoke)
 
 if _nonstop:
     while 1:
