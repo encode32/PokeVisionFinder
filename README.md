@@ -1,4 +1,10 @@
-# PokeVisionFinder
+# PokeVisionFinder Modfied Edition
+Supports which pokemons to catch in a .txt file.
+![catch.txt illu](http://puu.sh/qlvFQ/1e072d06d4.png)
+![catch.txt illu](http://puu.sh/qlvJy/d21350db3f.png)
+
+
+
 
 Command Line Usage:
 
