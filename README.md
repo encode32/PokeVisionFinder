@@ -35,3 +35,7 @@ To Automaticism for contributing project - https://github.com/Automaticism
 If you want to contribute with a beer here you can, thanks!
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JSE6WU28B8XFW)
+
+# Discord
+Join Discord.
+[![Discord](http://i.imgur.com/NhrW4Mx.png)](https://discord.gg/7vqKs3S)
