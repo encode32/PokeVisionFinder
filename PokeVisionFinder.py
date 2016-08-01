@@ -25,9 +25,9 @@ _pokemons = []
 _pokemonslisted = []
 
 #PokeSniper2 Configuration
-ps_use = False
-ps_path = "D:\PokemonGO\Sniper\PokeSniper2.exe"
-ps_dir = "D:\PokemonGO\Sniper"
+ps_use = True
+ps_path = ""
+ps_dir = ""
 
 #Clear
 def _clear():
@@ -84,9 +84,10 @@ def _jsondatach(url):
 def _pokename(id):
     return pokemonlist[id-1]
 
-def _pokesplit(pokemons):
-    global _pokemons
-    _pokemons = pokemons.split(",")
+
+#def _pokesplit(pokemons):
+#    global _pokemons
+#    _pokemons = pokemons.split(",")
 
 #POkePrinter
 def _printer(name,lat,lng,exp):
@@ -196,15 +197,27 @@ _inputpoke = ""
 
 _populateCities()
 if len(argv) == 2:
-    _inputpoke = argv[1]
+    # If argv[1] is less than 10 (catch.txt) use file
+    if len(argv[1]) < 10:
+        _inputpoke = [line.strip() for line in open(argv[1], 'r')]
+    # Else the user want to type in manually.
+    else: _inputpoke = argv[1]
 elif len(argv) == 5:
-    _inputpoke = argv[1]
+    if len(argv[1]) < 10:
+        _inputpoke = [line.strip() for line in open(argv[1], 'r')]
+    else: _inputpoke = argv[1]
     _nonstop = int(argv[2]) == 1
     _zoomFactor = float(argv[3])
     _logging = int(argv[4]) == 1
 else:
     _inputpoke = raw_input("Pokemon: ")
-_pokesplit(_inputpoke)
+    
+# Set pokemons to inputpoke,
+# inputpoke is an already parsed list of pokemons
+# from a text file.
+# Use new line to separate each pokemon.
+_pokemons = _inputpoke
+
 if _nonstop:
     while 1:
         _loop()
