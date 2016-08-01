@@ -85,9 +85,9 @@ def _pokename(id):
     return pokemonlist[id-1]
 
 
-#def _pokesplit(pokemons):
-#    global _pokemons
-#    _pokemons = pokemons.split(",")
+def _pokesplit(pokemons):
+    global _pokemons
+    _pokemons = pokemons.split(",")
 
 #POkePrinter
 def _printer(name,lat,lng,exp):
@@ -211,12 +211,7 @@ elif len(argv) == 5:
     _logging = int(argv[4]) == 1
 else:
     _inputpoke = raw_input("Pokemon: ")
-    
-# Set pokemons to inputpoke,
-# inputpoke is an already parsed list of pokemons
-# from a text file.
-# Use new line to separate each pokemon.
-_pokemons = _inputpoke
+_pokesplit(_inputpoke)
 
 if _nonstop:
     while 1:
