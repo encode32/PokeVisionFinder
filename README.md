@@ -28,6 +28,7 @@ ps_dir = "D:\PokemonGO\Sniper" // Your folder path for the PokeSniper2
 # Thanks
 
 To juninho271999 for adding coords - http://www.ownedcore.com/forums/members/1092159-juninho271999.html
+To Automaticism for contributing project - https://github.com/Automaticism
 
 # Donation
 
