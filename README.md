@@ -5,6 +5,7 @@ Supports which pokemons to catch in a .txt file.
 
 
 
+Require: http://docs.python-requests.org/en/master/
 
 Command Line Usage:
 
