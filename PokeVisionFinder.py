@@ -45,35 +45,35 @@ def _jsondata(url):
         elif _verbose == 2:
             print '[ERROR] HTTPError = ' + str(e)
         _logError(str(e))
-        return _jsondata(url)
+        return url
     except urllib2.URLError, e:
         if _verbose == 1:
             print '[ERROR] URLError'
         elif _verbose == 2:
             print '[ERROR] URLError = ' + str(e)
         _logError(str(e))
-        return _jsondata(url)
+        return url
     except httplib.HTTPException, e:
         if _verbose == 1:
             print '[ERROR] HTTPException'
         elif _verbose == 2:
             print '[ERROR] HTTPException = ' + str(e)
         _logError(str(e))
-        return _jsondata(url)
+        return url
     except ValueError, e:
         if _verbose == 1:
             print '[ERROR] ValueError'
         elif _verbose == 2:
             print '[ERROR] ValueError = ' + str(e)
         _logError(str(e))
-        return _jsondata(url)
+        return url
     except Exception:
         if _verbose == 1:
             print '[ERROR] generic exception: '
         elif _verbose == 2:
             print '[ERROR] generic exception: ' + traceback.format_exc()
         _logError(traceback.format_exc())
-        return _jsondata(url)
+        return url
 
 #JsonData Custom Headers
 def _jsondatach(url):
@@ -258,6 +258,12 @@ def _finderTrackemon(city):
             elif _verbose == 2:
                 print '[ERROR] IndexError= ' + str(e)
             _logError(str(e))
+	except TypeError, e:
+	    if _verbose == 1:
+		print '[ERROR] TypeError'
+	    elif _verbose == 2:
+	        print '[ERROR] TypeError= ' + str(e)
+	    _logError(str(e))
 
 #Finder
 def _finderSkipLagged(city):
