@@ -341,6 +341,7 @@ _inputpoke = ""
 
 if _catchfile:
     _inputpoke = [line.strip() for line in open("catch.txt", 'r')]
+    _pokemons = _inputpoke
 else:
     _inputpoke = _args.pokemons
     _pokesplit(_inputpoke)
