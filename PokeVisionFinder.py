@@ -315,7 +315,7 @@ def _loop():
             _finderTrackemon(city)
 
 #Init
-_parser = argparse.ArgumentParser(description='PokeVisionFinder v0.1.2 - encode')
+_parser = argparse.ArgumentParser(description='PokeVisionFinder v0.1.3 - encode')
 _parser.add_argument('-m','--mode', help='Mode of work', choices=["Skip", "Track","All"], default="All")
 _parser.add_argument('-l', '--loop', help='Run infinite', action='store_true', default=False)
 _parser.add_argument('-L','--logging', help='Log pokemons found', action='store_true', default=False)
