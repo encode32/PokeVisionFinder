@@ -1,4 +1,5 @@
 # PokeVisionFinder
+
 Supports which pokemons to catch in a .txt file.
 ![catch.txt illu](http://puu.sh/qlvFQ/1e072d06d4.png)
 ![catch.txt illu](http://puu.sh/qlvJy/d21350db3f.png)
@@ -9,22 +10,12 @@ Require: http://docs.python-requests.org/en/master/
 
 Command Line Usage:
 
-PokeVisionFinder.py snorlax,dratini,dragonair,dragonite,muk 0 2 1
+TODO
 
-1st argument: pokemon list
 
-2nd argument: 0/1 Run once/Run Infinite
+# PokeSniper2 Setting (v1.7)
 
-3rd argument: zoomFactor, increase search range, 1 is like 13.85Km diagonal
-
-4th argument 0/1 Not Logging pokemons/Logging pokemons (pokemons.log file)
-
-# PokeSniper2 Setting
-ps_use = False // Set this to True
-
-ps_path = "D:\PokemonGO\Sniper\PokeSniper2.exe" // Your path for the PokeSniper2 exe
-
-ps_dir = "D:\PokemonGO\Sniper" // Your folder path for the PokeSniper2
+Put PokeSniper2 Files on Sniper Folder
 
 # Thanks
 
