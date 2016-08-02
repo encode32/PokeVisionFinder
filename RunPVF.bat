@@ -1,0 +1,1 @@
+PokeVisionFinder.py charizard,snorlax,venusaur,blastoise,dragonite,dragonair,dratini 1 5 1 All
