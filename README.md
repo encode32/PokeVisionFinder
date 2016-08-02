@@ -10,7 +10,26 @@ Require: http://docs.python-requests.org/en/master/
 
 Command Line Usage:
 
-TODO
+```ruby
+usage: pokevisionfinder.exe [-h] [-m {Skip,Track,All}] [-l] [-L] [-c]
+                            [-p POKEMONS] -f FACTOR [-v {0,1,2}]
+
+PokeVisionFinder v0.1.3 - encode
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m {Skip,Track,All}, --mode {Skip,Track,All}
+                        Mode of work
+  -l, --loop            Run infinite
+  -L, --logging         Log pokemons found
+  -c, --catchfile       Use catch file
+  -p POKEMONS, --pokemons POKEMONS
+                        List of pokemons
+  -f FACTOR, --factor FACTOR
+                        ZoomFactor
+  -v {0,1,2}, --verbose {0,1,2}
+                        Verbose mode
+```
 
 
 # PokeSniper2 Setting (v1.7)
