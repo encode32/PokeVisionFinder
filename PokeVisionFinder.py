@@ -279,12 +279,12 @@ def _finderTrackemon(city):
             elif _verbose == 2:
                 print '[ERROR] IndexError = ' + str(e)
             _logError(str(e))
-	except TypeError, e:
-	    if _verbose == 1:
-		print '[ERROR] TypeError'
-	    elif _verbose == 2:
-	        print '[ERROR] TypeError= ' + str(e)
-	    _logError(str(e))
+        except TypeError, e:
+            if _verbose == 1:
+                print '[ERROR] TypeError'
+            elif _verbose == 2:
+                print '[ERROR] TypeError= ' + str(e)
+            _logError(str(e))
 
 #Finder
 def _finderSkipLagged(city):
@@ -333,13 +333,24 @@ def _finderSkipLagged(city):
             elif _verbose == 2:
                 print '[ERROR] IndexError = ' + str(e)
             _logError(str(e))
+        except TypeError, e:
+            if _verbose == 1:
+                print '[ERROR] TypeError'
+            elif _verbose == 2:
+                print '[ERROR] TypeError= ' + str(e)
+            _logError(str(e))
 
 #Sniper
 def _pokeSniper(name, lat, lng):
     if _nt and _colors:
         wincolors.paint(wincolors.colors.WARNING)
     try:
-        subprocess.Popen([ps_path, name, lat, lng], cwd=ps_dir)
+        if _terminal:
+            subp = subprocess.Popen([ps_path, name, lat, lng], cwd=ps_dir, creationflags = subprocess.CREATE_NEW_CONSOLE)
+            subp.wait()
+        else:
+            subp = subprocess.Popen([ps_path, name, lat, lng], cwd=ps_dir)
+            subp.wait()
     except OSError, e:
         error = "[WARNING] - PokeSniper2 Not found on Sniper folder"
         if _nt and _colors:
@@ -367,6 +378,7 @@ def _loop():
 _parser = argparse.ArgumentParser(description='PokeVisionFinder v'+__version__+' - encode')
 _parser.add_argument('-m','--mode', help='Mode of work', choices=["Skip", "Track","All"], default="All")
 _parser.add_argument('-s', '--sniper', help='No use sniper', action='store_false', default=True)
+_parser.add_argument('-S', '--sniperterminal', help='Sniper on a different terminal', action='store_true', default=False)
 _parser.add_argument('-l', '--loop', help='Run infinite', action='store_true', default=False)
 _parser.add_argument('-L','--logging', help='Log pokemons found', action='store_true', default=False)
 _parser.add_argument('-c','--catchfile', help='Use catch file', action='store_true', default=False)
@@ -379,6 +391,8 @@ _args = _parser.parse_args()
 _useMode = _args.mode
 
 ps_use = _args.sniper
+
+_terminal = True if ps_use and _args.sniperterminal else False
 
 _logging = _args.logging
 
