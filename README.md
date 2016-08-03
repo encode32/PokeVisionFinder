@@ -49,4 +49,4 @@ If you want to contribute with a beer here you can, thanks!
 
 # Discord
 Join Discord.
-[![Discord](http://i.imgur.com/NhrW4Mx.png)](https://discord.gg/7vqKs3S)
+[![Discord](http://i.imgur.com/NhrW4Mx.png)](http://discord.gg/kdNuCh7)
