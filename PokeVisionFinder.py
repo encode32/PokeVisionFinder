@@ -12,7 +12,7 @@ import subprocess
 import wincolors
 
 __author__ = 'encode'
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 _nt = False
 if os.name is "nt":
