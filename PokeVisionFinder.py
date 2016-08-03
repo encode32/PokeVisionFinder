@@ -1,16 +1,22 @@
 import os
-from sys import argv
 import urllib2
 import traceback
 import argparse
-from time import sleep,time
+from time import time
 import json
 from pokemons import pokemonlist
 import httplib
 import re
 import requests
+import subprocess
+import wincolors
 
 __author__ = 'encode'
+__version__ = '0.1.4'
+
+_nt = False
+if os.name is "nt":
+    _nt = True
 
 _cities = []
 
@@ -21,11 +27,9 @@ _pokemonslisted = []
 _session =requests.Session()
 _sessionid = ""
 
-_scriptpath = os.path.dirname(os.path.realpath(__file__))
-#PokeSniper2 Configuration
-ps_use = True
-ps_path = _scriptpath+"\Sniper\PokeSniper2.exe"
-ps_dir = _scriptpath+"\Sniper"
+_scriptpath = os.path.abspath(os.path.dirname(__file__))
+ps_dir = os.path.join(_scriptpath,"Sniper")
+ps_path = os.path.join(ps_dir,"PokeSniper2.exe")
 
 #ErrorLogger
 def _logError(error):
@@ -36,6 +40,8 @@ def _logError(error):
 
 #JsonData
 def _jsondata(url):
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.ERROR)
     try:
         _rawdata = urllib2.urlopen(url)
         return json.load(_rawdata)
@@ -77,6 +83,8 @@ def _jsondata(url):
 
 #JsonData Custom Headers
 def _jsondatach(url):
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.ERROR)
     try:
         _headers = { 'User-Agent' : 'Mozilla/5.0' }
         _req = urllib2.Request(url, None,_headers)
@@ -119,6 +127,8 @@ def _jsondatach(url):
         return _jsondata(url)
 
 def _jsondatachTrack(url):
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.ERROR)
     try:
         global sessionid
         if sessionid == "":
@@ -165,6 +175,8 @@ def _jsondatachTrack(url):
 #Find TrackMon Session
 def _findSessionIdTrack():
     global sessionid
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.INFO)
     print "[INFO] Finding SessionId for TrackMon"
     rw = re.compile('var sessionId \= \'(.*?)\'\;')
     r = _session.get("http://www.trackemon.com/")
@@ -173,6 +185,8 @@ def _findSessionIdTrack():
             suc = rw.search(line)
             if suc:
                 sessionid = suc.group(1)
+                if _nt and _colors:
+                    wincolors.paint(wincolors.colors.SUCCESS)
                 print "[INFO] SessionId for TrackMon Found"
             else:
                 _findSessionIdTrack()
@@ -188,11 +202,12 @@ def _pokesplit(pokemons):
 
 #POkePrinter
 def _printer(name,lat,lng,exp):
-    _time = time()
     _remain = float(exp)-time()
     _minutes = int(_remain / 60)
     _seconds = int(_remain % 60)
     _expire = str(_minutes) + " Minutes, " + str(_seconds) + " Seconds"
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.SUCCESS)
     print "-------------------------------------------------"
     print "Pokemon: " + name
     print "Coordinates: " + str(lat) + "," + str(lng)
@@ -220,6 +235,8 @@ def _populateCities():
 
 #Finder
 def _finderTrackemon(city):
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.INFO)
     print "[INFO] Looking pokemons in: " + city[0]
     _latitudesw = float(city[1]) - (0.05 * _zoomFactor)
     _longitudesw = float(city[2]) - (0.05 * _zoomFactor)
@@ -246,28 +263,34 @@ def _finderTrackemon(city):
                     else:
                         print "[INFO] Pokemon already listed found."
         except KeyError, e:
+            if _nt and _colors:
+                wincolors.paint(wincolors.colors.ERROR)
             if _verbose == 1:
                 print '[ERROR] KeyError'
             elif _verbose == 2:
                 import traceback
-                print '[ERROR] KeyError= ' + str(e)
+                print '[ERROR] KeyError = ' + str(e)
             _logError(str(e))
         except IndexError, e:
+            if _nt and _colors:
+                wincolors.paint(wincolors.colors.ERROR)
             if _verbose == 1:
                 print '[ERROR] IndexError'
             elif _verbose == 2:
-                print '[ERROR] IndexError= ' + str(e)
+                print '[ERROR] IndexError = ' + str(e)
             _logError(str(e))
 
 #Finder
 def _finderSkipLagged(city):
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.INFO)
     print "[INFO] Looking pokemons in: " + city[0]
     _latitudesw = float(city[1]) - (0.05 * _zoomFactor)
     _longitudesw = float(city[2]) - (0.05 * _zoomFactor)
     _latitudene = float(city[1]) + (0.05 * _zoomFactor)
     _longitudene = float(city[2]) + (0.05 * _zoomFactor)
 
-    _scanurl = "https://skiplagged.com/api/pokemon.php?bounds="+str(_latitudesw)+","+str(_longitudesw)+\
+    _scanurl = "http://skiplagged.com/api/pokemon.php?bounds="+str(_latitudesw)+","+str(_longitudesw)+\
                ","+str(_latitudene)+","+str(_longitudene)
     _scanurljsondata = _jsondatach(_scanurl)
 
@@ -288,23 +311,43 @@ def _finderSkipLagged(city):
                     else:
                         print "[INFO] Pokemon already listed found."
         except KeyError, e:
+            if _nt and _colors:
+                wincolors.paint(wincolors.colors.ERROR)
             if _verbose == 1:
                 print '[ERROR] KeyError'
             elif _verbose == 2:
                 import traceback
-                print '[ERROR] KeyError= ' + str(e)
+                print '[ERROR] KeyError = ' + str(e)
             _logError(str(e))
         except IndexError, e:
+            if _nt and _colors:
+                wincolors.paint(wincolors.colors.ERROR)
             if _verbose == 1:
                 print '[ERROR] IndexError'
             elif _verbose == 2:
-                print '[ERROR] IndexError= ' + str(e)
+                print '[ERROR] IndexError = ' + str(e)
             _logError(str(e))
 
 #Sniper
 def _pokeSniper(name, lat, lng):
-    os.chdir(ps_dir)
-    os.system(ps_path+" "+name+" "+lat+" "+lng)
+    if _nt and _colors:
+        wincolors.paint(wincolors.colors.WARNING)
+    try:
+        subprocess.Popen([ps_path, name, lat, lng], cwd=ps_dir)
+    except OSError, e:
+        error = "[WARNING] - PokeSniper2 Not found on Sniper folder"
+        if _nt and _colors:
+            wincolors.paint(wincolors.colors.ERROR)
+        if _verbose == 0:
+            print error
+        elif _verbose == 1:
+            print '[ERROR] OSError'
+            print error
+        elif _verbose == 2:
+            print '[ERROR] OSError = ' + str(e)
+            print error
+        _logError(str(e))
+        _logError(error)
 
 #Loop
 def _loop():
@@ -315,11 +358,13 @@ def _loop():
             _finderTrackemon(city)
 
 #Init
-_parser = argparse.ArgumentParser(description='PokeVisionFinder v0.1.3 - encode')
+_parser = argparse.ArgumentParser(description='PokeVisionFinder v'+__version__+' - encode')
 _parser.add_argument('-m','--mode', help='Mode of work', choices=["Skip", "Track","All"], default="All")
+_parser.add_argument('-s', '--sniper', help='No use sniper', action='store_false', default=True)
 _parser.add_argument('-l', '--loop', help='Run infinite', action='store_true', default=False)
 _parser.add_argument('-L','--logging', help='Log pokemons found', action='store_true', default=False)
 _parser.add_argument('-c','--catchfile', help='Use catch file', action='store_true', default=False)
+_parser.add_argument('-C','--colors', help='No use colors', action='store_false', default=True)
 _parser.add_argument('-p','--pokemons', help='List of pokemons', default="Pikachu")
 _parser.add_argument('-f','--factor', help='ZoomFactor', type=int, required=True, default=1)
 _parser.add_argument('-v','--verbose', help='Verbose mode', type=int, choices=[0, 1, 2], default=0)
@@ -327,11 +372,15 @@ _args = _parser.parse_args()
 
 _useMode = _args.mode
 
+ps_use = _args.sniper
+
 _logging = _args.logging
 
 _zoomFactor = _args.factor
 
 _catchfile = _args.catchfile
+
+_colors = _args.colors
 
 _nonstop = _args.loop
 
@@ -349,7 +398,15 @@ else:
 if "Track" in _useMode or "All" in _useMode:
     _findSessionIdTrack()
 _populateCities()
-
+if _nt and _colors:
+    wincolors.paint(wincolors.colors.INFO)
+print """
+=====================================================================
+Welcome to PokeVisionFinder """ + __version__ + """
+Author: """ + __author__ + """
+Check out our Github at: https://github.com/encode32/PokeVisionFinder
+=====================================================================
+"""
 if _nonstop:
     while 1:
         _loop()
