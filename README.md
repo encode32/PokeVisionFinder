@@ -40,8 +40,7 @@ Put PokeSniper2 Files on Sniper Folder
 
 # Thanks
 
-To juninho271999 for adding coords - http://www.ownedcore.com/forums/members/1092159-juninho271999.html
-To Automaticism for contributing project - https://github.com/Automaticism
+To all contributors on github, ownedcore and discord.
 
 # Donation
 
