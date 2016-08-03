@@ -11,18 +11,20 @@ Require: http://docs.python-requests.org/en/master/
 Command Line Usage:
 
 ```ruby
-usage: pokevisionfinder.exe [-h] [-m {Skip,Track,All}] [-l] [-L] [-c]
-                            [-p POKEMONS] -f FACTOR [-v {0,1,2}]
+usage: PokeVisionFinder.py [-h] [-m {Skip,Track,All}] [-s] [-l] [-L] [-c] [-C]
+                           [-p POKEMONS] -f FACTOR [-v {0,1,2}]
 
-PokeVisionFinder v0.1.3 - encode
+PokeVisionFinder v0.1.4 - encode
 
 optional arguments:
   -h, --help            show this help message and exit
   -m {Skip,Track,All}, --mode {Skip,Track,All}
                         Mode of work
+  -s, --sniper          No use sniper
   -l, --loop            Run infinite
   -L, --logging         Log pokemons found
   -c, --catchfile       Use catch file
+  -C, --colors          No use colors
   -p POKEMONS, --pokemons POKEMONS
                         List of pokemons
   -f FACTOR, --factor FACTOR
