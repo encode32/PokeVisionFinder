@@ -251,7 +251,7 @@ def _finderTrackemon(city):
             for pokemon in _scanurljsondata['pokemon']:
                 _id = pokemon['pokedexTypeId']
                 _name = _pokename(_id)
-                if pokename.lower() in _name.lower():
+                if _name.lower() in pokename.lower():
                     _lat = pokemon['latitude']
                     _lng = pokemon['longitude']
                     _exp = pokemon['expirationTime']
@@ -305,7 +305,7 @@ def _finderSkipLagged(city):
             for pokemon in _scanurljsondata['pokemons']:
                 _id = pokemon['pokemon_id']
                 _name = _pokename(_id)
-                if pokename.lower() in _name.lower():
+                if _name.lower() in pokename.lower():
                     _lat = pokemon['latitude']
                     _lng = pokemon['longitude']
                     _exp = pokemon['expires']
