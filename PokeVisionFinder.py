@@ -216,13 +216,43 @@ def _printer(name,lat,lng,exp):
     if _logging:
         _logPokemon(name, str(lat), str(lng), _expire)
 
+# Cleanup function for logfile
+def _logCleanup():
+    os.chdir(_scriptpath)
+    with open("pokemons.log", "r") as f:
+        timestrings = f.readlines()
+        f.close()
+    with open("pokemons.log", "w") as f:
+        for timestring in timestrings:
+            expireindex = timestring.find("Expires in:")
+            expiretime = timestring[expireindex+len("Expires in: ["):timestring.find("[Timestamp")-2]
+            expireminindex = expiretime.find("Minutes")
+            expireminutes = expiretime[:expireminindex-1]
+            expiresecindex = expiretime.find("Seconds")
+            expireseconds = expiretime[expireminindex+len("Minutes, "):expiresecindex-1]
+            expireinseconds = (int(expireminutes) * 60) + int(expireseconds)
+            oldtimeindex = timestring.find("Timestamp: ")
+            oldtimeindex = oldtimeindex + len("Timestamp: ")
+            oldtime = timestring[oldtimeindex:]
+            oldtimeindex = oldtime.find("]")
+            oldtime = oldtime[:oldtimeindex]
+            oldtime = datetime.datetime.strptime(oldtime, '%Y-%m-%d %H:%M:%S')
+            xpiretime = oldtime + datetime.timedelta(seconds = expireinseconds)
+            nowtime = datetime.datetime.now()
+            timeleft = xpiretime - nowtime
+            expired = datetime.timedelta(seconds=45)
+            if timeleft >= expired:
+                f.write(timestring)
+        f.close()
+        
 #Logger
 def _logPokemon(name, lat, lng, expire):
     os.chdir(_scriptpath)
     with open("pokemons.log", "a+") as f:
-        f.write("[" + name + "] [" + lat + "," + lng + "] [" + expire + "]\n")
+        f.write("[" + name + "] [" + lat + "," + lng + "] Expires in: [" + expire + "] [" +'Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) +"]\n")
         f.close()
-
+    _logCleanup()
+    
 #CoordsLoader
 def _populateCities():
     os.chdir(_scriptpath)
