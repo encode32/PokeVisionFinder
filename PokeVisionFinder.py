@@ -219,8 +219,8 @@ def _printer(name,lat,lng,exp):
 #Logger
 def _logPokemon(name, lat, lng, expire):
     os.chdir(_scriptpath)
-    with open("pokemons.log", "a+") as f:
-        f.write("[" + name + "] [" + lat + "," + lng + "] [" + expire + "]\n")
+    with open("pokemons.html", "a+") as f:
+        f.write("<a href=pokesniper2://" + name + "/" + lat + "," + lng + ">pokesniper2://" + name + "/" + lat + "," + lng + "</a> [" + expire + "]<br>\n")
         f.close()
 
 #CoordsLoader
